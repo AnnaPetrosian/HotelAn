@@ -13,8 +13,13 @@ public class Reservering {
 		this.aantalDagen = aantalDagen;
 		
 	}
-	
-	
+	 
+	public void printReservering()
+	{
+		System.out.println("Naam:\t"+this.boeker.naam);
+		System.out.println("AantalPersonen:\t"+this.aantalPersonenDieMeereizen);
+		System.out.println("Aantal dagen:\t"+this.aantalDagen);
+	}
 	}
 	
 

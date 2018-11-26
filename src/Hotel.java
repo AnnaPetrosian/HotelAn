@@ -1,76 +1,79 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.omg.Messaging.SyncScopeHelper;
+
 
 
 public class Hotel {
 	static ArrayList<Kamer>  kamers = new ArrayList<>();
-
-	public static void main(String[] args) {
-		
-			kamers.add(new Kamer(4));
-			kamers.add(new Kamer(4));
-			kamers.add(new Kamer(2));
-			kamers.add(new Kamer(2));
-			kamers.add(new Kamer(1));
-			
-			System.out.println("Goede dag: welcom Hotel Fawlty Towers");
-			System.out.println("Wilt u bij ons gaan reserveren");
-			System.out.println("Toets ja als u wil bij ons gaan reserveren");
-			Scanner scanner= new Scanner(System.in);
-		boolean isOverboekt = false;
-	while (isOverboekt== false) 
+	//kamer met aantalBeddenen reserveringen creeren
+	Hotel()
 	{
-		String invoer = scanner.next();
-		if(invoer.equals("ja")){
-			System.out.println("Toets u naam alstublieft");
-		String newNaam = scanner.next();
-		System.out.println("Met hoeveel personen wilt u gaan reserveren?");
-		int aantalPersonen = scanner.nextInt();
-		isBezet(aantalPersonen);	
-			
-		}else {
-			System.out.println("Geen toegang");
-			
+		Reservering r = null; 
+		kamers.add(new Kamer(4, r));
+		kamers.add(new Kamer(4, r));
+		kamers.add(new Kamer(2, r));
+		kamers.add(new Kamer(2, r));
+		kamers.add(new Kamer(1, r));
+	}
+	//Overzicht van reservering
+	public void printKamers()
+	{
+		boolean alleKamersZijnLeeg = true; 
+		for(Kamer k:kamers)
+		{
+			if(k.r != null)
+			{
+				alleKamersZijnLeeg = false;
+				k.r.printReservering();
+				System.out.println("\n\n");
+			}
+		}
+		if (alleKamersZijnLeeg == true)
+		{
+			System.out.println("Alle kamers zijn leeg!");
 		}
 	}
 	
-			
-}
+	public void setKamer(int aantalPersonen, Reservering newReservering)
+	{
 		
-	public static boolean isBezet(int newAantalPersonen) {
-		boolean bezet = false; 
-		int aantalBezetKamers = 0; 
-		for(Kamer k:kamers)
+		for(Kamer k: kamers)
 		{
-			if(k.aantalBedden == newAantalPersonen && newAantalPersonen == 4 )
+			if (k.aantalBedden == aantalPersonen && k.r == null)
 			{
-				aantalBezetKamers++;
-				if(aantalBezetKamers == 2)
-				{
-					bezet = true;
-					break;
-				}
-			}
-			else	if(k.aantalBedden == newAantalPersonen && newAantalPersonen ==2  )
-			{
-				aantalBezetKamers++;
-				if(aantalBezetKamers == 2)
-				{
-					bezet = true;
-					break;
-				}
-			}
-				
-			else if(k.aantalBedden == newAantalPersonen && aantalBezetKamers == 1)
-			{
-				bezet = true;
+				k.r = newReservering;
 				break;
 			}
-			
+		}
+	}
+	// Check beschikbaarheid van de kamers
+	public  boolean isBezet(int newAantalPersonen) {
+		boolean bezet = true; 
+		
+		for(Kamer k:kamers)
+		{
+			if(k.aantalBedden == newAantalPersonen && k.r == null)
+			{
+				bezet = false;
+			}
 		}
 			return bezet;
-		}	 
+		}	
+	public boolean alleKamersBezet()
+	{
+		boolean tempIsVol = true;
+		for(Kamer k:kamers)
+		{
+			if (k.r == null)
+			{
+				tempIsVol = false;
+				break;
+			}
+		}
+		return tempIsVol;
+	}
 	
 }
 

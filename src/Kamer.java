@@ -1,15 +1,13 @@
 
 public class Kamer {
 	
- private Reservering r = null;
+    public Reservering r;
  	 int aantalBedden = 0;
  
-		Kamer(int aantalBedden ){
+		Kamer(int aantalBedden, Reservering newReservering ){
  		this.aantalBedden = aantalBedden;
+ 		this.r = newReservering;
  	}
-		void setReservering(Reservering newReservering)
-		{
-			this.r = newReservering;
-		}
 		
 }
+	
